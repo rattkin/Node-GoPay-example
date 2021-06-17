@@ -16,7 +16,8 @@ const app = express();
 app.use(cors(corsOptions));
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("hello world!");
+  const method = req.query.method;
+  res.send("hello " + method);
 });
 
 exports.app = functions.https.onRequest(app);

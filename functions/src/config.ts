@@ -13,6 +13,8 @@ export const corsOptions: CorsOptions = {
       const myURL = new URL(origin.toString());
       const isDomainAllowed = DomainWhitelist.indexOf(myURL.hostname) !== -1;
 
+      console.log(myURL);
+
       if (isDomainAllowed) {
         // allow CORS for this request
         callback(null, true);
