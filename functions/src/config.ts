@@ -1,5 +1,8 @@
 import {CorsOptions} from "cors";
 
+/**
+ * allow calling this endpoint only from our whitelisted apps
+ */
 export const corsOptions: CorsOptions = {
   credentials: true,
   origin: function(origin: CorsOptions["origin"], callback) {
