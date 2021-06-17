@@ -12,9 +12,8 @@ export const corsOptions: CorsOptions = {
 
       const myURL = new URL(origin.toString());
       const isDomainAllowed = DomainWhitelist.indexOf(myURL.hostname) !== -1;
-      const isExtensionAllowed = false; // origin.endsWith('.jpg');
 
-      if (isDomainAllowed || isExtensionAllowed) {
+      if (isDomainAllowed) {
         // allow CORS for this request
         callback(null, true);
       } else {
@@ -27,5 +26,5 @@ export const corsOptions: CorsOptions = {
 };
 
 export const DomainWhitelist = [
-  "https://angular-gopay-example.web.app/",
+  "angular-gopay-example.web.app",
 ];
