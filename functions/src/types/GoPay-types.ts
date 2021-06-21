@@ -16,12 +16,12 @@ export type GoPayConfiguration = {
    * token scope
    * https://doc.gopay.com/en/?shell#scope
    */
-  scope?: "payment-create" | "payment-all";
+  scope?: scope;
   /**
    * language used in createPayment if lang is not specified
    * also used for localization of errors https://doc.gopay.com/en/?shell#return-errors
    */
-  language?: GoPayLanguage
+  language?: language
   /**
    * Browser timeout in seconds
    */
@@ -52,28 +52,28 @@ export type accounts = {
   /**
    * ID of account
    */
-  "id": number,
+  id: number,
   /**
    * Balance of account
    */
-  "balance": number,
+  balance: number,
   /**
    * Currency of payment, format corresponds to ISO 4217, uppercase
    */
-  "currency": string,
+  currency: string,
 }
 
 /**
  * https://doc.gopay.com/en/#address
  */
 export type address = {
-  "street": string,
-  "postal_code": string,
-  "city": string,
+  street: string,
+  postal_code: string,
+  city: string,
   /**
    * Country code	ISO 3166-2, all lowercase
    */
-  "country": string
+  country: string
 }
 
 /**
@@ -84,75 +84,76 @@ export type payer = {
   /**
    * Array of allowed payment methods
    */
-  "allowed_payment_instruments": payment_instrument,
+  allowed_payment_instruments: payment_instrument,
   /**
    * Preferred payment method
    */
-  "default_payment_instrument": payment_instrument,
+  default_payment_instrument: payment_instrument,
   /**
    * Preferred bank if default_payment_instrument is set to BANK_ACCOUNT, set by SWIFT code
    */
-  "default_swift"?: SWIFT,
+  default_swift?: SWIFT,
   /**
    * Array of allowed bank codes
    */
-  "allowed_swifts"?: SWIFT[],
+  allowed_swifts?: SWIFT[],
   /**
    * Bank account information
    */
-  "bank_account": bank_account,
+  bank_account: bank_account,
   /**
    * Payment card information
    */
   payment_card: payment_card
-  "contact": contact,
+  contact: contact,
   /**
    * PIN for identification payment purposes
    * https://doc.gopay.com/en/#identification-payment
    */
-  "verify_pin"?: string,
-  "allowed_card_token"?: string,
+  verify_pin?: string,
+  allowed_card_token?: string,
 }
 
 /**
  * https://doc.gopay.com/en/#bank-account
  */
 export type bank_account = {
-  /*
+  /**
   *International bank account, 50 characters
   */
-  "iban": string,
-  /*
+  iban: string,
+  /**
   *Business identification code (SWIFT), 11 characters
   */
-  "bic": string,
-  /*
+  bic: string,
+  /**
   *Bank account prefix, 64 characters
   */
-  "prefix": string,
-  /*
+  prefix: string,
+  /**
   *Bank account number, 128 characters
   */
-  "account_number": string,
-  /*
+  account_number: string,
+  /**
   *Bank account code, 8 characters
   */
-  "bank_code": string,
-  /*
+  bank_code: string,
+  /**
   *Bank account name, 70 characters
   */
-  "account_name": string,
+  account_name: string,
 }
 
 /**
+ * Payment card information
  * https://doc.gopay.com/en/#payment-card
  */
 export type payment_card = {
-  "card_number": string,
-  "card_expiration": string,
-  "card_brand": string,
-  "card_issuer_country": string,
-  "card_issuer_bank": string,
+  card_number: string,
+  card_expiration: string,
+  card_brand: string,
+  card_issuer_country: string,
+  card_issuer_bank: string,
 }
 
 /**
@@ -160,14 +161,14 @@ export type payment_card = {
  * https://doc.gopay.com/en/#contact
  */
 export type contact = {
-  "first_name": string,
-  "last_name": string,
-  "email": string,
-  "phone_number": string,
-  "city": string,
-  "street": string,
-  "postal_code": string,
-  "country_code": string,
+  first_name: string,
+  last_name: string,
+  email: string,
+  phone_number: string,
+  city: string,
+  street: string,
+  postal_code: string,
+  country_code: string,
 }
 
 /**
@@ -175,8 +176,8 @@ export type contact = {
  * https://doc.gopay.com/en/#target
  */
 export type target = {
-  "type": "ACCOUNT",
-  "goid": number,
+  type: "ACCOUNT",
+  goid: number,
 }
 
 /**
@@ -184,17 +185,194 @@ export type target = {
  * https://doc.gopay.com/en/#items
  */
 export type items = {
-  "type": GoPayPaymentItemType,
-  "product_url": string,
-  "ean"?: string,
-  "count": number,
-  "name": string,
-  "amount": number,
-  "vat_rate": GoPayVatRate
+  type: GoPayPaymentItemType,
+  product_url: string,
+  ean?: string,
+  count: number,
+  name: string,
+  amount: number,
+  vat_rate: GoPayVatRate
 }
 
-export type GoPayLanguage = "CS" | "EN" | "SK" | "DE" | "RU" | "PL" | "HU"
+export type eet = {
+  /**
+  * DIČ of the entrustment taxpayer	varchar
+  */
+  dic_poverujiciho: string,
+  /**
+  * The total amount in cents
+  */
+  celk_trzba: number,
+  /**
+  * The total amount of supplies exempt from VAT in cents
+  */
+  zakl_nepodl_dph: number,
+  /**
+  * The total tax base amount, the basic VAT rate in cents
+  */
+  zakl_dan1: number,
+  /**
+  * The total amount of VAT, the basic rate in cents
+  */
+  dan1: number,
+  /**
+  * The total tax base amount with a first reduced rate of VAT in cents
+  */
+  zakl_dan2: number,
+  /**
+  * The total VAT amount with a first reduced rate in cents
+  */
+  dan2: number,
+  /**
+  * The total tax base amount with a second reduced rate of VAT in cents
+  */
+  zakl_dan: number,
+  /**
+  * The total VAT amount with a second reduced rate	in cents
+  */
+  dan3: number,
+  /**
+  * The total amount of the VAT regime for travel service	in cents
+  */
+  cest_sluz: number,
+  /**
+  * The total amount of the VAT regime for the sale of used goods with a basic rate	in cents
+  */
+  pouzit_zboz1: number,
+  /**
+  * The total amount of the VAT regime for the sale of used goods with a first reduced rate	in cents
+  */
+  pouzit_zboz2: number,
+  /**
+  * The total amount of the VAT regime for the sale of used goods with a second reduced rate in cents
+  */
+  pouzit_zboz3: number,
+  /**
+  * The total amount of payments designated for subsequent pumping or settlement in cents
+  */
+  urceno_cerp_zuct: number,
+  /**
+  * The total amount of payments which are followed by pumping or settlement of the payment in cents
+  */
+  cerp_zuct: number,
+  mena: currency
+}
+
+/**
+ * https://doc.gopay.com/en/#eet-code
+ */
+export type eet_code = {
+  fik: string,
+  bkp: string,
+  pkp: string,
+}
+
+/**
+ * Callback and notification URL
+ * https://doc.gopay.com/en/#callback
+ */
+export type callback = {
+  /**
+  *	URL address for return to e-shop (with https:// protocol)	(max 512 characters)
+  */
+  return_url: string,
+  /**
+  *	URL address for sending asynchronous notification in the case of changes in the payment status (with protocol)
+  */
+  notification_url: string,
+}
+
+/**
+ * Additional parameters of the payment
+ * Example:  {"name":"invoicenumber","value":"2015001003"}
+ * https://doc.gopay.com/en/#additional-params
+ */
+export type additional_params = {
+  name: string,
+  value: string,
+}
+
+/**
+ * Setting of recurring payment
+ * https://doc.gopay.com/en/#recurrence
+ */
+export type recurrence = {
+  /**
+   * Time period of recurring	string
+   */
+  recurrence_cycle: recurrence_cycle
+  /**
+   * Recurring period of recurring payment
+   */
+  recurrence_period: number,
+  /**
+   * The period of validity recurring payment yyyy-mm-dd
+   */
+  recurrence_date_to: string,
+  /**
+   * Describes state of recurring payment
+   */
+  recurrence_state: "REQUESTED" | "STARTED" | "STOPPED",
+}
+
+
+/**
+ * https://doc.gopay.com/en/#recurrence-cycle
+ */
+export type recurrence_cycle =
+  "DAY" |
+  "WEEK" |
+  "MONTH" |
+  "ON_DEMAND";
+
+/**
+ * https://doc.gopay.com/en/#currency
+ */
+export enum currency {
+  "CZECH_CROWNS" = "CZK",
+  "EUROS" = "EUR",
+  "POLISH_ZLOTY" = "PLN",
+  "HUNGARIAN_FORINT" = "HUF",
+  "BRITISH_POUND" = "GBP",
+  "US_DOLLAR" = "USD",
+  "ROMANIAN_LEU" = "RON",
+  "KUNA" = "HRK",
+  "BULGARIAN_LEV" = "BGN",
+}
+
+export enum  scope = "payment-create" | "payment-all"
+
+export type language = "CS" | "EN" | "SK" | "DE" | "RU" | "PL" | "HU"
   | "FR" | "RO" | "BG" | "HR" | "IT" | "ES";
+
+  
+  export type payment_instrument =
+  "PAYMENT_CARD" |
+  "BANK_ACCOUNT" |
+  "PRSMS" |
+  "MPAYMENT" |
+  "PAYSAFECARD" |
+  "SUPERCASH" |
+  "GOPAY" |
+  "PAYPAL" |
+  "BITCOIN" |
+  "ACCOUNT" |
+  "GPAY" |
+  "APPLE_PAY";
+  
+  
+  export type GoPayPaymentItemType =
+  "ITEM" |
+  "DISCOUNT" |
+  "DELIVERY";
+  
+  export enum GoPayVatRate {
+    "RATE_1" = 0,
+    "RATE_2" = 10,
+    "RATE_3" = 15,
+    "RATE_4" = 21,
+}
+
 
 export enum SWIFT {
   "CESKA_SPORITELNA" = "GIBACZPX",
@@ -247,49 +425,3 @@ export enum SWIFT {
   "EUROBANK" = "SOGEPLPW",
   "POLSKI_BANK_PRZEDSIEBIORCZOSCI_SPOLKA_AKCYJNA" = "PBPBPLPW",
 }
-
-export enum GoPayCurrency {
-  "CZECH_CROWNS" = "CZK",
-  "EUROS" = "EUR",
-  "POLISH_ZLOTY" = "PLN",
-  "HUNGARIAN_FORINT" = "HUF",
-  "BRITISH_POUND" = "GBP",
-  "US_DOLLAR" = "USD",
-  "ROMANIAN_LEU" = "RON",
-  "KUNA" = "HRK",
-  "BULGARIAN_LEV" = "BGN",
-}
-
-export type payment_instrument =
-  "PAYMENT_CARD" |
-  "BANK_ACCOUNT" |
-  "PRSMS" |
-  "MPAYMENT" |
-  "PAYSAFECARD" |
-  "SUPERCASH" |
-  "GOPAY" |
-  "PAYPAL" |
-  "BITCOIN" |
-  "ACCOUNT" |
-  "GPAY" |
-  "APPLE_PAY";
-
-
-export type GoPayPaymentItemType =
-  "ITEM" |
-  "DISCOUNT" |
-  "DELIVERY";
-
-export type GoPayRecurrence =
-  "DAY" |
-  "WEEK" |
-  "MONTH" |
-  "ON_DEMAND";
-
-export enum GoPayVatRate {
-  "RATE_1" = 0,
-  "RATE_2" = 10,
-  "RATE_3" = 15,
-  "RATE_4" = 21,
-}
-
